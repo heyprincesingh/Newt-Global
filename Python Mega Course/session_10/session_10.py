@@ -2,7 +2,7 @@ while True:
     user_action = input("Type add, show, edit, complete or exit: ")
     user_action = user_action.strip()
 
-    if "add" in user_action:
+    if user_action.startswith("add"):
         todo = user_action[4:] + "\n"
 
         with open("todos.txt", "r") as file:
@@ -13,37 +13,47 @@ while True:
         with open("todos.txt", "w") as file:
             todos = file.writelines(todos)
 
-    elif "show" in user_action:
+    elif user_action.startswith("show"):
         with open("todos.txt", "r") as file:
             todos = file.readlines()
 
         for index, item in enumerate(todos):
             print(f"{index + 1}-{item}", end="")
 
-    elif "edit" in user_action:
-        number = int(user_action[4:])
+    elif user_action.startswith("edit"):
+        try:
+            number = int(user_action[4:])
 
-        with open("todos.txt", "r") as file:
-            todos = file.readlines()
+            with open("todos.txt", "r") as file:
+                todos = file.readlines()
 
-        new_todo = input("Enter a new todo: ") + "\n"
-        todos[number - 1] = new_todo
+            new_todo = input("Enter a new todo: ") + "\n"
+            todos[number - 1] = new_todo
 
-        with open("todos.txt", "w") as file:
-            todos = file.writelines(todos)
+            with open("todos.txt", "w") as file:
+                todos = file.writelines(todos)
 
-    elif "complete" in user_action:
-        number = int(user_action[9:])
+        except ValueError:
+            print("Command not valid")
+            continue
 
-        with open("todos.txt", "r") as file:
-            todos = file.readlines()
+    elif user_action.startswith("complete"):
+        try:
+            number = int(user_action[9:])
 
-        todos.pop(number - 1)
+            with open("todos.txt", "r") as file:
+                todos = file.readlines()
 
-        with open("todos.txt", "w") as file:
-            todos = file.writelines(todos)
+            todos.pop(number - 1)
 
-    elif "exit" in user_action:
+            with open("todos.txt", "w") as file:
+                todos = file.writelines(todos)
+
+        except ValueError or IndexError:
+            print("Command not valid")
+            continue
+
+    elif user_action.startswith("exit"):
         break
     else:
         print("Command not valid")
