@@ -1,4 +1,4 @@
-# Python Mega Course - Certificate
+# The Complete Oracle SQL Certification Course - Certificate
 
 This repository contains the certificate for completing **Course 2: The Complete Oracle SQL Certification Course** on Udemy.
 
